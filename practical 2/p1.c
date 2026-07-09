@@ -1,88 +1,162 @@
 #include <stdio.h>
-#define MAX 100 
+#include <time.h>
+
+#define MAX 100
 int stack[MAX];
 int top = -1;
-void push(int item) {
-    if (top >= MAX - 1) {
-        printf("Stack overflow\n");
-    } else {
-        stack[++top] = item;
-        printf("Pushed: %d\n", item);
+void push()
+{
+    int value;
+    if(top == MAX - 1)
+    {
+        printf("Stack Overflow\n");
+        return;
     }
+    printf("Enter value: ");
+    scanf("%d", &value);
+
+    top++;
+    stack[top] = value;
+
+    printf("Element inserted successfully.\n");
 }
-void pop() {
-    if (top < 0) 
+
+void pop()
+{
+    if(top == -1)
     {
-        printf("Stack underflow\n");
-    } else 
-    {       
-         printf("Popped: %d\n", stack[top--]);
+        printf("Stack Underflow\n");
+        return;
     }
+
+    printf("Deleted Element = %d\n", stack[top]);
+    top--;
 }
-void display() {
-    if (top < 0) 
+
+void peep()
+{
+    int pos;
+
+    if(top == -1)
     {
-        printf("Stack is empty\n");
-    } else 
-    {      
-        printf("Stack elements: ");
-        for (int i = top; i >= 0; i--) {
-            printf("%d ", stack[i]);
-        }
-        printf("\n");
+        printf("Stack is Empty\n");
+        return;
     }
-}
-void peep() {
-    if (top < 0) 
+
+    printf("Enter position from top: ");
+    scanf("%d", &pos);
+
+    if(pos <= 0 || pos > top + 1)
     {
-        printf("Stack is empty\n");
-    } else 
-    {
-        printf("Top element: %d\n", stack[top]);
+        printf("Invalid Position\n");
+        return;
     }
+
+    printf("Element = %d\n", stack[top - pos + 1]);
 }
-void change(int position, int item) {
-    if (position < 1 || position > top + 1) 
+
+void change()
+{
+    int pos, value;
+
+    if(top == -1)
     {
-        printf("Invalid position\n");
-    } else 
-    {
-        stack[position - 1] = item;
-        printf("Changed position %d to %d\n", position, item);
+        printf("Stack is Empty\n");
+        return;
     }
+
+    printf("Enter position from top: ");
+    scanf("%d", &pos);
+
+    if(pos <= 0 || pos > top + 1)
+    {
+        printf("Invalid Position\n");
+        return;
+    }
+
+    printf("Enter new value: ");
+    scanf("%d", &value);
+
+    stack[top - pos + 1] = value;
+
+    printf("Value changed successfully.\n");
 }
-int main() {
-    int choice, item;
-    while (1) {
-        printf("1. Push\n2. Pop\n3. Display\n4. Peep\n5. Change\n6. Exit\n");
+
+void display()
+{
+    int i;
+
+    if(top == -1)
+    {
+        printf("Stack is Empty\n");
+        return;
+    }
+
+    printf("\nStack Elements:\n");
+
+    for(i = top; i >= 0; i--)
+        printf("%d\n", stack[i]);
+}
+
+int main()
+{
+    clock_t start, end;
+    double cpu_time_used;
+
+    int choice;
+
+    start = clock();
+
+    do
+    {
+        printf("\n- STACK MENU -\n");
+        printf("1. PUSH\n");
+        printf("2. POP\n");
+        printf("3. PEEP\n");
+        printf("4. CHANGE\n");
+        printf("5. DISPLAY\n");
+        printf("6. EXIT\n");
+
         printf("Enter your choice: ");
         scanf("%d", &choice);
-        switch (choice) {
+
+        switch(choice)
+        {
             case 1:
-                printf("Enter the item to push: ");
-                scanf("%d", &item);
-                push(item);
+                push();
                 break;
+
             case 2:
                 pop();
                 break;
+
             case 3:
+                peep();
+                break;
+
+            case 4:
+                change();
+                break;
+
+            case 5:
                 display();
                 break;
-            case 4:
-                 peep();
-                break;
-            case 5:
-                printf("Enter the position to change: ");
-                scanf("%d", &item);
-                printf("Enter the new item: ");
-                scanf("%d", &item);
-                change(item, item);
-                break;
+
             case 6:
-                return 0;
+                printf("Program Ended.\n");
+                break;
+
             default:
-                printf("Invalid choice\n");
+                printf("Invalid Choice\n");
         }
-    }
+
+    } while(choice != 6);
+
+    end = clock();
+
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+
+    printf("\nExecution Time = %f seconds\n", cpu_time_used);
+
+    return 0;
 }

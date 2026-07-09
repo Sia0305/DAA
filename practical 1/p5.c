@@ -1,4 +1,4 @@
-// Write a program to find the fibonacci series using recursion.
+// Write a program to find the fibomacci series using recursion.
 #include <stdio.h>
 #include <time.h>
 
@@ -24,3 +24,24 @@ int main() {
     printf("Time taken to calculate Fibonacci series: %f seconds\n", time_taken);
     return 0;
 }
+
+
+// Write a program to find the fibomacci series using iteration.
+// #include <stdio.h>
+// #include <time.h>
+
+// void fibonacci(int n) {
+//     int a = 0, b = 1, next;
+//     printf("Fibonacci series up to %d terms:\n", n);
+//     for (int i = 0; i < n; i++) {
+//         if (i <= 1) {
+//             next = i;
+//         } else {
+//             next = a + b;
+//             a = b;
+//             b = next;
+//         }
+//         printf("%d ", next);
+//     }
+//     printf("\n");
+// }
